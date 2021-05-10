@@ -1,18 +1,45 @@
 // import * as express from 'express'; // da error el import de esta manera ???
+import {spawn} from 'child_process';
 import express = require('express');
 
 const app = express();
+/*
+app.get('/execmd', (cmd, res) => {
+  // const bat = spawn('cmd.exe', ['/c', 'my.bat']);
+  const comandoLinux = spawn(`${cmd}.exe`, []); // `${args}`
+  comandoLinux.on('data', (data) => {
+    console.log('Enviamos el JSON');
+    res.send({
+      info: [
+        {
+          title: 'Salida exitosa del comando',
+          data: `${data}`,
+        },
+      ],
+    });
+  });
 
-app.get('', (_, res) => {
-  res.send('<h1>My application</h1>');
+  comandoLinux.on('error', (information) => {
+    console.log('Comunicamos el error');
+    res.send({
+      info: [
+        {
+          title: 'Error en el comando',
+          name: `${information.name}`,
+          message: `${information.message}`,
+        },
+      ],
+    });
+  });
+
+  comandoLinux.on('end', () => {
+    console.log('Termina  mos');
+  });
 });
+*/
 
-app.get('/notes', (_, res) => {
-  res.send('Notes');
-});
-
-app.get('/info', (_, res) => {
-  res.send('Information');
+app.get('*', (_, res) => {
+  res.send('<h1>404</h1>');
 });
 
 app.listen(3000, () => {
