@@ -3,17 +3,16 @@ import {spawn} from 'child_process';
 import express = require('express');
 
 const app = express();
-/*
-app.get('/execmd', (cmd, res) => {
-  // const bat = spawn('cmd.exe', ['/c', 'my.bat']);
-  const comandoLinux = spawn(`${cmd}.exe`, []); // `${args}`
-  comandoLinux.on('data', (data) => {
-    console.log('Enviamos el JSON');
-    res.send({
+
+app.get('/execmd', (request, response) => {
+  console.log(request.query);
+  const comandoLinux = spawn(`${request.query.cmd}`, [`${request.query.args}`, `.`]);
+  comandoLinux.stdout.on('data', (chunk) => {
+    response.send({
       info: [
         {
           title: 'Salida exitosa del comando',
-          data: `${data}`,
+          data: `${chunk}`,
         },
       ],
     });
@@ -21,7 +20,7 @@ app.get('/execmd', (cmd, res) => {
 
   comandoLinux.on('error', (information) => {
     console.log('Comunicamos el error');
-    res.send({
+    response.send({
       info: [
         {
           title: 'Error en el comando',
@@ -31,12 +30,7 @@ app.get('/execmd', (cmd, res) => {
       ],
     });
   });
-
-  comandoLinux.on('end', () => {
-    console.log('Termina  mos');
-  });
 });
-*/
 
 app.get('*', (_, res) => {
   res.send('<h1>404</h1>');
